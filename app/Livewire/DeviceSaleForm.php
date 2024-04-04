@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 use Livewire\WithFileUploads;
+ 
 use App\Models\Device;
 use App\Models\DeviceImage;
 use Livewire\Component;
@@ -9,33 +10,50 @@ use Livewire\Component;
 class DeviceSaleForm extends Component
 {
     use WithFileUploads;
+    protected $layout = 'layouts.app';
     public $brand, $model, $description, $expected_price ;
     public $name, $address, $postal_code, $city;
     public $showConfirmationModal = false;
     public $images = []; // Promenljiva za više slika
 
-    protected $rules = [
-        'name' => 'required',
-        'address' => 'required',
-        'postal_code' => 'required',
-        'city' => 'required',
-        'brand' => 'required',
-        'model' => 'required',
-        'description' => 'required',
-        'images.*' => 'image|max:1024|min:1', //
-    ];
+    
 
     public function submit()
-    {
+    {       
 
         // Logika za čuvanje podataka u bazi
+        $this->validate([
+        'brand' => 'required|string|max:255',
+        'model' => 'required|string|max:255',
+        'expected_price' => 'required|numeric',
+        'description' => 'required|string',
+        'name' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'postal_code' => 'required|string|max:255',
+        'city' => 'required|string|max:255',
+        'images' => 'required', // Proverava da li je niz slika prazan
+        'images.*' => 'required|image|max:20048', // Dozvolite samo slike do 10MB
+    ]); 
+     $this->showConfirmationModal = true;
 
-        $this->showConfirmationModal = true; // Prikaži modal za potvrdu
+ // Prikaži modal za potvrdu
         // Kreiranje instance uređaja i čuvanje u bazi
 
     }
     public function finalSubmit()
     {
+
+        $this->validate([ // Ponovite iste validacione pravila
+        'brand' => 'required|string|max:255',
+        'model' => 'required|string|max:255',
+        'expected_price' => 'required|numeric',
+        'description' => 'required|string',
+        'name' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'postal_code' => 'required|string|max:255',
+        'city' => 'required|string|max:255',
+        'images.*' => 'required|image|max:20048',
+          ]); 
         $device = Device::create([
             'brand' => $this->brand,
             'model' => $this->model,
@@ -63,9 +81,14 @@ class DeviceSaleForm extends Component
         $this->reset(); // Resetuj komponentu
         session()->flash('message', 'Vaš zahtev je uspešno poslat.');
     }
+public function removeImage($index)
+{
+    unset($this->images[$index]);
+    $this->images = array_values($this->images); // Resetujemo indekse niza
+}
 
     public function render()
     {
-        return view('livewire.device-sale-form');
+        return view('livewire.device-sale-form')->layout('layouts.app');
     }
 }
