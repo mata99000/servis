@@ -13,5 +13,8 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 Route::get('/sell', App\Livewire\DeviceSaleForm::class)->name('sell');
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin/dashboard', App\Livewire\admin\Dashboard::class)->name('admin.dashboard');
+});
 
 require __DIR__.'/auth.php';

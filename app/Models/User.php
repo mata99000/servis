@@ -47,4 +47,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function getIsAdminAttribute()
+{
+    return $this->attributes['is_admin']; // Pretpostavljamo da je is_admin boolean
+}
+
 }
