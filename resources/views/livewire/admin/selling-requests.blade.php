@@ -9,7 +9,7 @@
         </div>
     
         <!-- Table Container -->
-        <div class="w-full p-6">
+        <div class="w-full p-1">
             <div class="bg-white overflow-hidden shadow-md rounded my-6">
                 <table class="w-full leading-normal">
                     <thead>

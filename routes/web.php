@@ -18,4 +18,13 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin/selling-requests', App\Livewire\Admin\SellingRequests::class)->name('admin.selling-requests');
 });
 
+// Logout ruta koristeći POST zahtev
+Route::get('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
+
+
 require __DIR__.'/auth.php';
