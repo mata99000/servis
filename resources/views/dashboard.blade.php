@@ -55,7 +55,6 @@
 
 
                 </div>
-                @livewire('device-sale-form')
 
             </div>
         </div>
