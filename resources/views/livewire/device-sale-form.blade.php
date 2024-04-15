@@ -23,6 +23,8 @@
             <div>
                 <label for="brand" class="block text-sm font-medium text-gray-300">Brand</label>
                 <input wire:model="brand" id="brand" type="text" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 bg-gray-800 text-white" required>
+                <x-input-error class="mt-2" :messages="$errors->get('brand')" />
+
             </div>
 
             <div>
@@ -38,6 +40,8 @@
             <div>
                 <label for="expected_price" class="block text-sm font-medium text-gray-300">Expected Price</label>
                 <input wire:model="expected_price" id="expected_price" type="text" class="mt-1 block w-full border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 bg-gray-800 text-white">
+                <x-input-error class="mt-2" :messages="$errors->get('expected_price')" />
+
             </div>
 
             <div x-data="{ uploading: false, progress: 0 }"

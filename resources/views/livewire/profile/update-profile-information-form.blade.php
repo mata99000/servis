@@ -9,36 +9,51 @@ use Livewire\Volt\Component;
 new class extends Component
 {
     public string $name = '';
+    public string $address = '';
+    public string $postal_code = '';
+    public string $city = '';
+
     public string $email = '';
 
     /**
      * Mount the component.
      */
-    public function mount(): void
-    {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
-    }
+   public function mount(): void
+{
+    $user = Auth::user();  // Definisati ovu promenljivu pravilno
+    $this->name = $user->name;
+    $this->address = $user->address ?? '';
+    $this->postal_code = $user->postal_code ?? '';
+    $this->city = $user->city ?? '';
+    $this->email = $user->email;
+}
+
+    
 
     /**
      * Update the profile information for the currently authenticated user.
      */
     public function updateProfileInformation(): void
     {
-        $user = Auth::user();
 
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($user->id)],
-        ]);
+     $this->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore(Auth::user()->id)],
+        'address' => ['required', 'string', 'max:255'],
+        'postal_code' => ['required', 'numeric'],
+        'city' => ['required', 'string', 'max:255'],
+    ]);
 
-        $user->fill($validated);
+    $user = Auth::user();
+    $user->update([
+        'name' => $this->name,
+        'email' => $this->email,
+        'address' => $this->address,
+        'postal_code' => $this->postal_code,
+        'city' => $this->city,
+    ]);
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
-
-        $user->save();
+    $user->save();
 
         $this->dispatch('profile-updated', name: $user->name);
     }
@@ -78,6 +93,21 @@ new class extends Component
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        </div>
+          <div>
+            <x-input-label for="address" :value="__('Address')" />
+            <x-text-input wire:model="address" id="address" name="address" type="text" class="mt-1 block w-full" required autofocus autocomplete="address" />
+            <x-input-error class="mt-2" :messages="$errors->get('address')" />
+        </div>
+          <div>
+            <x-input-label for="postal_code" :value="__('Postal Code')" />
+            <x-text-input wire:model="postal_code" id="postal_code" name="postal_code" type="text" class="mt-1 block w-full" required autofocus autocomplete="postal_code" />
+            <x-input-error class="mt-2" :messages="$errors->get('postal_code')" />
+        </div>
+          <div>
+            <x-input-label for="city" :value="__('City')" />
+            <x-text-input wire:model="city" id="city" name="city" type="text" class="mt-1 block w-full" required autofocus autocomplete="city" />
+            <x-input-error class="mt-2" :messages="$errors->get('city')" />
         </div>
 
         <div>
