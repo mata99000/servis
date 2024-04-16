@@ -14,7 +14,7 @@ Route::view('profile', 'profile')
 
 Route::get('/sell', App\Livewire\DeviceSaleForm::class)->name('sell');
 Route::middleware(['auth', 'is_admin'])->group(function () {
-    Route::get('/admin/dashboard', App\Livewire\admin\Dashboard::class)->name('admin.dashboard');
+    Route::get('/admin/dashboard', App\Livewire\Admin\Dashboard::class)->name('admin.dashboard');
     Route::get('/admin/selling-requests', App\Livewire\Admin\SellingRequests::class)->name('admin.selling-requests');
 });
 
