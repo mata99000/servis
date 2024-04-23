@@ -19,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if(config('app.env') === 'production') {
+            \URL::forceScheme('https');
+        }
         $router = $this->app['router'];
         $router->aliasMiddleware('is_admin', \App\Http\Middleware\EnsureUserIsAdmin::class);
     }
