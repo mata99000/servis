@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\DeviceSaleForm;
+if (env('APP_ENV') === 'production') {
+    URL::forceSchema('https');
+}
 Route::view('/', 'welcome');
 
 Route::view('dashboard', 'dashboard')
