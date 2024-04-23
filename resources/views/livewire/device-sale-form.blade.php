@@ -62,7 +62,7 @@
                         <div class="relative group">
                             <img src="{{ $image->temporaryUrl() }}" alt="Pregled slike" class="rounded-lg">
                             <button type="button" wire:click="removeImage({{ $index }})" class="absolute top-0 right-0 bg-red-500 text-white p-2 rounded-full hover:bg-red-700 focus:outline-none transition duration-300 ease-in-out">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+                                <svg xmlns="https://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                                 <span class="absolute w-auto p-2 m-2 min-w-max left-full translate-x-3 top-1/2 -translate-y-1/2 bg-black text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">Izbriši</span>
