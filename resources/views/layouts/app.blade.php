@@ -28,7 +28,7 @@
         <!-- Regular Links for large screens -->
         <nav class="hidden sm:flex space-x-4">
             <a href="/sell" wire:navigate='/sell' class="text-gray-200 font-semibold hover:text-gray-100">Sell Your Device</a>
-            <a href="/create-repair-request" class="text-gray-200 font-semibold hover:text-gray-100">Create Repair Request</a>
+            <a href="/admin/dashboard" wire:navigate='/admin/dasboard' class="text-gray-200 font-semibold hover:text-gray-100">Admin Panel</a>
             <div @click.away="openAccount = false" class="relative" x-data="{ openAccount: false }">
                 <button @click="openAccount = !openAccount" class="text-gray-200 font-semibold hover:text-gray-100 flex items-center space-x-2">
                     <span>Account</span>
