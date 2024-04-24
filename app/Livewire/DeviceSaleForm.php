@@ -2,7 +2,8 @@
 
 namespace App\Livewire;
 use Livewire\WithFileUploads;
- 
+use Illuminate\Support\Facades\Log;
+
 use App\Models\Device;
 use App\Models\DeviceImage;
 use Livewire\Component;
@@ -42,6 +43,7 @@ class DeviceSaleForm extends Component
     // Proveravamo da li je $device uspešno kreiran pre nego što nastavimo
     if ($device) {
         foreach ($this->images as $image) {
+            Log::info('Uploading file: ' . $image->getClientOriginalName() . ' with mime type: ' . $image->getMimeType());
             $imagePath = $image->store('public/devices');
             DeviceImage::create([
                 'device_id' => $device->id, // Ovde koristimo $device promenljivu
