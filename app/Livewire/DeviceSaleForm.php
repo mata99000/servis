@@ -44,7 +44,7 @@ class DeviceSaleForm extends Component
     if ($device) {
         foreach ($this->images as $image) {
             Log::info('Uploading file: ' . $image->getClientOriginalName() . ' with mime type: ' . $image->getMimeType());
-            $imagePath = $image->store('public/devices');
+            $imagePath = $image->store('/', 'spaces'); // Učitaj sliku u folder tmp
             DeviceImage::create([
                 'device_id' => $device->id, // Ovde koristimo $device promenljivu
                 'path' => $imagePath,
