@@ -56,7 +56,21 @@
             </div>
 
             <!-- Prikaz učitanih slika -->
-          
+            @if ($images)
+                <div class="grid grid-cols-3 gap-4 mt-4">
+                    @foreach ($images as $index => $image)
+                        <div class="relative group">
+                            <img src="{{ $image->temporaryUrl() }}" alt="Pregled slike" class="rounded-lg">
+                            <button type="button" wire:click="removeImage({{ $index }})" class="absolute top-0 right-0 bg-red-500 text-white p-2 rounded-full hover:bg-red-700 focus:outline-none transition duration-300 ease-in-out">
+                                <svg xmlns="https://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                <span class="absolute w-auto p-2 m-2 min-w-max left-full translate-x-3 top-1/2 -translate-y-1/2 bg-black text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">Izbriši</span>
+                            </button>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
 
             <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 Submit
