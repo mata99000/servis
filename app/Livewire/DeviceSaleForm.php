@@ -32,6 +32,13 @@ class DeviceSaleForm extends Component
         //'images' => $this->temporary_file_upload['rules'], // Proverava da li je niz slika prazan
         //'images.*' => 'required|image|max:20048', // Dozvolite samo slike do 10MB
    // ]); 
+   $this->validate([
+    'brand' => 'required',
+    'model' => 'required',
+    'expected_price' => 'required|numeric',
+    'description' => 'nullable|string',
+    'images.*' => 'image|max:2048', // 2MB max po slici
+]);
 
     $device = Device::create([
         'brand' => $this->brand,
@@ -44,7 +51,7 @@ class DeviceSaleForm extends Component
     if ($device) {
         foreach ($this->images as $image) {
             Log::info('Uploading file: ' . $image->getClientOriginalName() . ' with mime type: ' . $image->getMimeType());
-            $imagePath = $image->store('/', 'spaces'); // Učitaj sliku u folder tmp
+            $imagePath = $image->store('device_images', 'spaces'); // Učitaj sliku u folder device_images            
             DeviceImage::create([
                 'device_id' => $device->id, // Ovde koristimo $device promenljivu
                 'path' => $imagePath,
@@ -65,42 +72,7 @@ class DeviceSaleForm extends Component
     }
     
     
-    public function finalSubmit()
-    {
-
-        $this->validate([ // Ponovite iste validacione pravila
-        'brand' => 'required|string|max:255',
-        'model' => 'required|string|max:255',
-        'expected_price' => 'required|numeric',
-        'description' => 'required|string',
-        'images.*' => 'required|image|max:200408',
-          ]); 
-        $device = Device::create([
-            'brand' => $this->brand,
-            'model' => $this->model,
-            'expected_price' => $this->expected_price,
-            'description' => $this->description,
-        ]);
-
-        // Proveravamo da li je $device uspešno kreiran pre nego što nastavimo
-        if ($device) {
-            foreach ($this->images as $image) {
-                $imagePath = $image->store('public/devices');
-                DeviceImage::create([
-                    'device_id' => $device->id, // Ovde koristimo $device promenljivu
-                    'path' => $imagePath,
-                ]);
-            }
-
-            session()->flash('message', 'Uređaj je uspešno poslat na otkup sa slikama.');
-            $this->reset(['brand', 'model', 'description', 'expected_price', 'images']); // Resetovanje stanja komponente
-        } else {
-            // U slučaju da postoji problem sa kreiranjem uređaja, obavestite korisnika
-            session()->flash('error', 'Došlo je do greške prilikom kreiranja uređaja.');
-        }
-        $this->reset(); // Resetuj komponentu
-        session()->flash('message', 'Vaš zahtev je uspešno poslat.');
-    }
+    
 public function removeImage($index)
 {
     unset($this->images[$index]);
