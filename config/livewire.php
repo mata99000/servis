@@ -12,7 +12,7 @@ return [
     | finds components. It's also referenced by the file creation commands.
     |
     */
-
+    'asset_url' => env('APP_URL', 'https://matejamihajlovic.com'),
     'class_namespace' => 'App\\Livewire',
 
     /*
