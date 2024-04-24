@@ -18,7 +18,7 @@ class DeviceSaleForm extends Component
     public $images = []; // Promenljiva za više slika
     public $progress;
 
-    
+
 
     public function submit()
     {       
@@ -51,7 +51,7 @@ class DeviceSaleForm extends Component
     if ($device) {
         foreach ($this->images as $image) {
             Log::info('Uploading file: ' . $image->getClientOriginalName() . ' with mime type: ' . $image->getMimeType());
-            $imagePath = $image->store('device_images', 'spaces'); // Učitaj sliku u folder device_images            
+            $imagePath = $image->store('device_images', 'local'); // Učitaj sliku u folder device_images            
             DeviceImage::create([
                 'device_id' => $device->id, // Ovde koristimo $device promenljivu
                 'path' => $imagePath,
