@@ -23,14 +23,14 @@ class DeviceSaleForm extends Component
     {       
 
         // Logika za čuvanje podataka u bazi
-        $this->validate([
-        'brand' => 'required|string|max:255',
-        'model' => 'required|string|max:255',
-        'expected_price' => 'required|numeric',
-        'description' => 'required|string',
-        'images' => 'required', // Proverava da li je niz slika prazan
-        'images.*' => 'required|image|max:20048', // Dozvolite samo slike do 10MB
-    ]); 
+       // $this->validate([
+        //'brand' => 'required|string|max:255',
+       // 'model' => 'required|string|max:255',
+       ///'expected_price' => 'required|numeric',
+        //'description' => 'required|string',
+        //'images' => $this->temporary_file_upload['rules'], // Proverava da li je niz slika prazan
+        //'images.*' => 'required|image|max:20048', // Dozvolite samo slike do 10MB
+   // ]); 
 
     $device = Device::create([
         'brand' => $this->brand,
